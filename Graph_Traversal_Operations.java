@@ -121,4 +121,7 @@ class Graph{
             }
         }
     }
+    public List<GraphEdge> getvertices(){
+        return adjlist;
+    }
 }
