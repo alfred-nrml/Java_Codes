@@ -24,6 +24,41 @@ class Main{
          System.out.println();
          g.print();
         System.out.println("============================");
+         //  List<GraphEdge>[] vertices=g.getvertices();
+        List<GraphEdge> prim=prims(g);
+      /* 
+        */
+        System.out.println("Prim's MST (Edge List Format):");
+         for(GraphEdge e:prim){
+            System.out.print("Edge "+e.getsrc()+" to "+e.getdes()+" with weight "+e.getw()+"\n");
+         }
+/*prim.forEach(e -> 
+    System.out.printf("Edge from %d to %d with weight %d%n", e.getsrc(), e.getdes(), e.getw())
+);*/
+    }
+    public static List<GraphEdge> prims(Graph g){
+        List<GraphEdge>[] vertices=g.getvertices();
+        boolean inmst[]=new boolean[vertices.length];
+        PriorityQueue<GraphEdge> pq=new PriorityQueue<>(Comparator.comparingInt(GraphEdge::getw));
+        List<GraphEdge> mstedge=new ArrayList<>();
+        int start=1;
+        inmst[start]=true;
+        pq.addAll(vertices[start]);
+        while(!pq.isEmpty()){
+            GraphEdge curr=pq.poll();
+            int des=curr.getdes();
+            if(inmst[des])continue;
+            mstedge.add(curr);
+            inmst[des]=true;
+              for (GraphEdge edge : vertices[des]) {
+                if (!inmst[edge.getdes()]) {
+                    pq.add(edge);
+                }
+            }
+          //  pq.addAll(vertices[des]);
+            
+        }
+        return mstedge;
     }
 }
 class GraphEdge{
@@ -121,7 +156,7 @@ class Graph{
             }
         }
     }
-    public List<GraphEdge> getvertices(){
+    public List<GraphEdge>[] getvertices(){
         return adjlist;
     }
 }
