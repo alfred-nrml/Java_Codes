@@ -1,0 +1,20 @@
+  public static List<GraphEdge> kruskal(Graph g){
+        List<GraphEdge>[] vertices=g.getvertices();
+        PriorityQueue<GraphEdge> pq=new PriorityQueue<>(Comparator.comparingInt(GraphEdge::getw));
+        for(List<GraphEdge> l:vertices){
+            pq.addAll(l);
+        }
+        List<GraphEdge> mst=new ArrayList<>();
+        Set<Integer> v=new HashSet<>();
+        while(!pq.isEmpty()){
+            GraphEdge curr=pq.poll();
+            int src=curr.getsrc();
+            int des=curr.getdes();
+            if(v.contains(src) && v.contains(des))continue;
+            
+            mst.add(curr);
+            v.add(src);
+            v.add(des);
+        }
+        return mst;
+    }
